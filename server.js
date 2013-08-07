@@ -47,4 +47,3 @@ function(identifier, profile, done)
 
 routes.load(app);
 app.listen(config.server.port);
-console.log("Listening on port " + config.server.port);
