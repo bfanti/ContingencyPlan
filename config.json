@@ -1,10 +1,13 @@
 {
-	"server": {
+	"server":
+	{
 		"port": 5000,
 		"public_dir": "public"
 	},
-	"dbs": {
-		"sampleUsers": {
+	"dbs":
+	{
+		"sampleUsers":
+		{
 			"type": "mock",
 			"url": "file:./sampleUsers.db"
 		}

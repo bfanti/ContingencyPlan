@@ -1,8 +1,11 @@
-requirejs.config({
-  deps: ["spa/main"],
-  paths: {
+requirejs.config(
+{
+  deps: [""],
+  paths:
+  {
   },
 
-  shim: {
+  shim:
+  {
   }
 });
