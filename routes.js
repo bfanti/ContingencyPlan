@@ -1,4 +1,6 @@
 var passport = require("passport");
+var Users = require("./users.js");
+var Plans = require("./plans.js");
 
 function ensureAuthenticated(req, res, next)
 {
@@ -21,5 +23,32 @@ module.exports =
         // Google Auth endpoints
 		app.get("/auth/google", passport.authenticate("google", { scope: [ "https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email" ] }));
 		app.get("/auth/google/return", passport.authenticate("google", { successRedirect: "/account", failureRedirect: "/login" }));
+
+        // REST API
+        app.get("/api/users/:userId/plans", ensureAuthenticated, function(req, res)
+        {
+            Plans.findAll(req.params.userId).done(function(plans)
+            {
+                res.json(plans);
+            })
+        });
+
+        app.post("/api.users/:userId/plans", ensureAuthenticated, function(req, res)
+        {
+            console.log(req.body);
+        });
+
+        app.get("/api/users", ensureAuthenticated, function(req, res)
+        {
+            res.json(req.user);
+        });
+
+        app.get("/api/users/:userId", ensureAuthenticated, function(req, res)
+        {
+            Users.findOne(req.params.userId).done(function(user)
+            {
+                res.json(user);
+            })
+        });
 	}
 }

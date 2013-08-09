@@ -3,19 +3,16 @@ var usersCollection;
 var Q = require("q");
 var _ = require("underscore");
 
+MongoClient.connect("mongodb://dbuser:dbuser@ds039498-a0.mongolab.com:39498/heroku_app17368956", function(err, db)
+{
+    if(err || !db)
+        throw "Can't connect to Database";
+
+    usersCollection = db.collection("users");
+});
+        
 module.exports =
 {
-    init: function()
-    {
-        MongoClient.connect("mongodb://dbuser:dbuser@ds039498-a0.mongolab.com:39498/heroku_app17368956", function(err, db)
-        {
-            if(err || !db)
-                throw "Can't connect to Database";
-
-            usersCollection = db.collection("users");
-        });
-    },
-
     findOne: function(id)
     {
         var deferred = Q.defer();
