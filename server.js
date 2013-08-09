@@ -10,6 +10,13 @@
 
     var Users = require("./users.js");
 
+    var baseURLs =
+    {
+        "LOCAL": "http://127.0.0.1:5000",
+        "DEV": "http://contingencyplan.herokuapp.com"
+    }
+
+    config.server.env = process.env.ENV || "LOCAL";
     config.server.port = process.env.PORT || config.server.port;
     config.server.public_dir = process.env.PUBLIC_DIR || config.server.public_dir;
 
@@ -60,7 +67,7 @@
     {
         clientID: "856641313075.apps.googleusercontent.com",
         clientSecret: "fVFd03XmjNr8jNgGy-zPmYqG",
-        callbackURL: "http://127.0.0.1:5000/auth/google/return"
+        callbackURL: baseURLs[config.server.env] + "/auth/google/return"
     },
     function(accessToken, refreshToken, profile, done)
     {
