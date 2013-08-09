@@ -1,6 +1,6 @@
 requirejs.config(
 {
-  deps: [""],
+  deps: ["js/app.js"],
   paths:
   {
   },

@@ -1,49 +1,74 @@
-var config = require("./config.json");
-var express = require("express");
-var routes = require("./routes.js");
-var passport = require("passport");
-var GoogleStrategy = require("passport-google").Strategy;
-
-var app = express();
-
-config.server.port = process.env.PORT || config.server.port;
-config.server.public_dir = process.env.PUBLIC_DIR || config.server.public_dir;
-
-app.configure(function()
+(function()
 {
-	app.use(express.favicon());
-	app.use(express.logger("dev"));
+    var config = require("./config.json");
+    var express = require("express");
+    var routes = require("./routes.js");
+    var passport = require("passport");
+    var GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 
-	app.use(express.bodyParser());
-	app.use(express.cookieParser());
-	app.use(express.methodOverride());
+    var app = express();
 
-	app.use(app.router);
+    var Users = require("./users.js");
 
-	app.use(express["static"](config.server.public_dir));
-});
+    config.server.port = process.env.PORT || config.server.port;
+    config.server.public_dir = process.env.PUBLIC_DIR || config.server.public_dir;
 
-app.configure("development", function()
-{
-    app.use(express.errorHandler(
+    Users.init();
+
+    app.configure(function()
     {
-        dumpException: true,
-        showStack: true
+        app.use(express.cookieParser());
+        app.use(express.bodyParser());
+        app.use(express.methodOverride());
+        app.use(express.session({ secret: "keyboard cat" }));
+    	app.use(express.favicon());
+    	app.use(express.logger("dev"));
+        app.use
+
+        app.use(passport.initialize());
+        app.use(passport.session());
+
+        app.use(app.router);
+
+        routes.load(app);
+        app.use(express["static"](config.server.public_dir));
+    });
+
+    app.configure("development", function()
+    {
+        app.use(express.errorHandler(
+        {
+            dumpException: true,
+            showStack: true
+        }));
+    });
+
+    passport.serializeUser(function(user, done)
+    {
+        done(null, user.googleId);
+    });
+
+    passport.deserializeUser(function(id, done)
+    {
+        Users.findOne(id).done(function (user) 
+        {
+            done(null, user);
+        });
+    });
+
+    passport.use(new GoogleStrategy(
+    {
+        clientID: "856641313075.apps.googleusercontent.com",
+        clientSecret: "fVFd03XmjNr8jNgGy-zPmYqG",
+        callbackURL: "http://127.0.0.1:5000/auth/google/return"
+    },
+    function(accessToken, refreshToken, profile, done)
+    {
+        Users.findOrCreate(profile).done(function(user)
+        {
+            done(null, user);
+        });
     }));
-});
 
-passport.use(new GoogleStrategy(
-{
-    returnURL: "http://contingencyplan.heroku.com/auth/google/return",
-    realm: "http://contingencyplan.heroku.com"
-},
-function(identifier, profile, done)
-{
-    User.findOrCreate({openId: identifier }, function(err, user)
-    {
-        done(err, user);
-    })
-}));
-
-routes.load(app);
-app.listen(config.server.port);
+    app.listen(config.server.port);
+})();
