@@ -7,7 +7,8 @@ function ensureAuthenticated(req, res, next)
     if (req.isAuthenticated())
         return next();
 
-    res.redirect("/login");
+    res.statusCode = 401;
+    res.end();
 }
 
 module.exports =
@@ -31,15 +32,15 @@ module.exports =
         app.get("/auth/logout", function(req, res) { req.logout(); res.redirect("/"); });
 
         // REST API
-        app.get("/api/users/:userId/plans", ensureAuthenticated, function(req, res)
+        app.get("/api/plans", ensureAuthenticated, function(req, res)
         {
-            Plans.findAll(req.params.userId).done(function(plans)
+            Plans.findAll(req.user.id).done(function(plans)
             {
                 res.json(plans);
             })
         });
 
-        app.post("/api/users/:userId/plans", ensureAuthenticated, function(req, res)
+        app.post("/api/plans", ensureAuthenticated, function(req, res)
         {
             Plans.addOne(req.body).done(function(result)
             {
@@ -47,7 +48,7 @@ module.exports =
             })
         });
 
-        app.get("/api/users/:userId", ensureAuthenticated, function(req, res)
+        app.get("/api/users", ensureAuthenticated, function(req, res)
         {
             Users.findOne(req.params.userId).done(function(user)
             {
