@@ -11,20 +11,31 @@
         <meta name="viewport" content="width=device-width">
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-
         <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/vendor/bootstrap.css">
+        <link rel="stylesheet" href="css/vendor/bootstrap-responsive.css">
         <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
+        <link rel="stylesheet" hrew="css/app.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <script type="text/javascript">
+            window.USER_AUTHENTICATED = <%=authenticated%>;
+        </script>
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
-        <div id="application"></div>
+        
+        <div id="application" class="container">
+            <div id="navigation"></div>
+            <div id="main"></div>
+            <div id="info"></div>
+        </div>
+
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
         <script src="js/plugins.js"></script>
+        <script src="js/vendor/bootstrap.js"></script>
 		<script src="js/vendor/underscore.js"></script>
         <script src="js/vendor/sha1.js"></script>
 		<script src="js/vendor/backbone.js"></script>

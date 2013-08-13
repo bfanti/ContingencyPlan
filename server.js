@@ -22,6 +22,10 @@
 
     app.configure(function()
     {
+        app.engine('.html', require('ejs').__express);
+        app.set("view engine", "html");
+        app.set('views', __dirname + '/views');
+
         app.use(express.cookieParser());
         app.use(express.bodyParser());
         app.use(express.methodOverride());

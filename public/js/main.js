@@ -1,11 +1,14 @@
 requirejs.config(
 {
-  deps: ["js/app.js"],
-  paths:
-  {
-  },
+    deps: ["js/app.js"],
+    paths:
+    {
+        "text": "vendor/text",
 
-  shim:
-  {
-  }
+        "templates": "../templates"
+    },
+
+    shim:
+    {
+    }
 });
