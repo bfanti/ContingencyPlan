@@ -29,7 +29,8 @@
     "passport-google-oauth": "~0.1.5",
     "underscore": "~1.5.1",
     "ejs": "~0.8.4",
-    "node-schedule": "~0.1.11"
+    "node-schedule": "~0.1.11",
+    "connect-mongo": "~0.3.3"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

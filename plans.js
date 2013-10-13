@@ -1,28 +1,26 @@
-var MongoClient = require("mongodb").MongoClient;
+
 var Q = require("q");
 var _ = require("underscore");
+var Scheduler = require("./scheduler.js");
 
-var scheduler = require("./scheduler.js");
-
-scheduler.initialize();
-
-var plansCollection;
-
-MongoClient.connect("mongodb://dbuser:dbuser@ds039498-a0.mongolab.com:39498/heroku_app17368956", function(err, db)
+var Plans = function(db)
 {
-    if(err || !db)
-        throw "Can't connect to Database";
+    this.initialize(db);
+};
 
-    plansCollection = db.collection("contingencyPlans");
-});
-
-module.exports =
+_.extend(Plans.prototype,
 {
+    initialize: function(db)
+    {
+        this.scheduler = new Scheduler(db);
+        this.plansCollection = db.collection("plansCollection");
+    },
+
     findAll: function(id)
     {
         var deferred = Q.defer();
 
-        plansCollection.find({ userId: id }).toArray(function(err, docs)
+        this.plansCollection.find({ userId: id }).toArray(function(err, docs)
         {   
             if(err !== null || docs === null)
                 deferred.reject(err);
@@ -35,9 +33,10 @@ module.exports =
 
     addOne: function(plan)
     {
+        var self = this;
         var deferred = Q.defer();
 
-        plansCollection.insert(plan, function(err, result)
+        this.plansCollection.insert(plan, function(err, result)
         {
             if(err || result === null)
                 deferred.reject(err);
@@ -50,10 +49,12 @@ module.exports =
         {
             deferred.promise.done(function()
             {
-                scheduler.schedule(plan);
+                self.scheduler.schedule(plan);
             });   
         }
 
         return deferred.promise;
     }
-}
+});
+
+module.exports = Plans;

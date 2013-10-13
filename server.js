@@ -1,80 +1,113 @@
 var config = require("./config.json");
 var express = require("express");
-var routes = require("./routes.js");
+var MongoStore = require('connect-mongo')(express);
 var passport = require("passport");
 var GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 
-var app = express();
+var DB = require("./db.js");
+var Routes = require("./routes.js");
 
+var Plans = require("./plans.js");
 var Users = require("./users.js");
+var Scheduler = require("./scheduler.js");
+
+var app = express();
 
 var baseURLs =
 {
     "LOCAL": "http://127.0.0.1:5000",
     "DEV": "http://contingencyplan.herokuapp.com"
-}
+};
 
 config.server.env = process.env.ENV || "LOCAL";
 config.server.port = process.env.PORT || config.server.port;
 config.server.public_dir = process.env.PUBLIC_DIR || config.server.public_dir;
 
-app.configure(function()
+DB.initialize().done(startServer);
+
+function startServer(db)
 {
-    app.engine('.html', require('ejs').__express);
-    app.set("view engine", "html");
-    app.set('views', __dirname + '/views');
-
-    app.use(express.cookieParser());
-    app.use(express.bodyParser());
-    app.use(express.methodOverride());
-    app.use(express.session({ secret: "keyboard cat" }));
-	app.use(express.favicon());
-	app.use(express.logger("dev"));
-    app.use
-
-    app.use(passport.initialize());
-    app.use(passport.session());
-
-    app.use(app.router);
-
-    routes.load(app);
-    app.use(express["static"](config.server.public_dir));
-});
-
-app.configure("development", function()
-{
-    app.use(express.errorHandler(
+    app.controllers =
     {
-        dumpException: true,
-        showStack: true
+        plans: new Plans(db),
+        users: new Users(db)
+    };
+
+    // Instantiate and initialize App Routes
+    new Scheduler(db).loadJobsFromDB();
+
+    app.configure(function()
+    {
+        app.engine('.html', require('ejs').__express);
+        app.set("view engine", "html");
+        app.set('views', __dirname + '/views');
+
+        app.use(express.cookieParser());
+        app.use(express.bodyParser());
+        app.use(express.methodOverride());
+        app.use(express.session(
+        {
+            secret: "keyboard cat",
+            cookie:
+            {
+                maxAge: 2629740000
+            },
+            store: new MongoStore(
+            {
+                url: "mongodb://dbuser:dbuser@ds039498-a0.mongolab.com:39498/heroku_app17368956"
+            }),
+        }));
+        app.use(express.favicon());
+        app.use(express.logger("dev"));
+        app.use
+
+        app.use(passport.initialize());
+        app.use(passport.session());
+
+        new Routes(app) ;
+
+        app.use(app.router);
+
+        app.use(express["static"](config.server.public_dir));
+    });
+
+    app.configure("development", function()
+    {
+        app.use(express.errorHandler(
+        {
+            dumpException: true,
+            showStack: true
+        }));
+    });
+
+    passport.serializeUser(function(user, done)
+    {
+        done(null, user.googleId);
+    });
+
+    passport.deserializeUser(function(id, done)
+    {
+        app.controllers.users.findOne(id).done(function (user) 
+        {
+            done(null, user);
+        });
+    })
+    ;
+    passport.use(new GoogleStrategy(
+    {
+        clientID: "856641313075.apps.googleusercontent.com",
+        clientSecret: "fVFd03XmjNr8jNgGy-zPmYqG",
+        callbackURL: baseURLs[config.server.env] + "/auth/google/return"
+    },
+    function(accessToken, refreshToken, profile, done)
+    {
+        app.controllers.users.findOrCreate(profile).done(function(user)
+        {
+            done(null, user);
+        });
     }));
-});
 
-passport.serializeUser(function(user, done)
-{
-    done(null, user.googleId);
-});
+    app.listen(config.server.port);
 
-passport.deserializeUser(function(id, done)
-{
-    Users.findOne(id).done(function (user) 
-    {
-        done(null, user);
-    });
-});
-
-passport.use(new GoogleStrategy(
-{
-    clientID: "856641313075.apps.googleusercontent.com",
-    clientSecret: "fVFd03XmjNr8jNgGy-zPmYqG",
-    callbackURL: baseURLs[config.server.env] + "/auth/google/return"
-},
-function(accessToken, refreshToken, profile, done)
-{
-    Users.findOrCreate(profile).done(function(user)
-    {
-        done(null, user);
-    });
-}));
-
-app.listen(config.server.port);
+    console.log("App successfully initialized and started...");
+};

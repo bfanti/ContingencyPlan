@@ -1,34 +1,24 @@
-var MongoClient = require("mongodb").MongoClient;
-var usersCollection;
 var Q = require("q");
 var _ = require("underscore");
 
-
-var connectDb = function()
+var Users = function(db)
 {
-    MongoClient.connect("mongodb://dbuser:dbuser@ds039498-a0.mongolab.com:39498/heroku_app17368956", connectCallback);
+    this.usersCollection = null;
+    this.initialize(db);
 };
 
-var connectCallback = function(err, db)
+_.extend(Users.prototype,
 {
-    if(err || !db)
+    initialize: function(db)    
     {
-        connectDb();
-        return;
-    }
+        this.usersCollection = db.collection("usersCollection");
+    },
 
-    usersCollection = db.collection("users");
-};
-
-connectDb();
-        
-module.exports =
-{
     findOne: function(id)
     {
         var deferred = Q.defer();
 
-        usersCollection.find({ googleId: id }).toArray(function(err, docs)
+        this.usersCollection.find({ googleId: id }).toArray(function(err, docs)
         {
             if(err !== null || docs.length !== 1)
                 deferred.reject(err);
@@ -44,7 +34,7 @@ module.exports =
         var self = this;
         var deferred = Q.defer();
 
-        usersCollection.find({ googleId: profile.id }).toArray(function(err, docs)
+        this.usersCollection.find({ googleId: profile.id }).toArray(function(err, docs)
         {
             if(err !== null || docs.length !== 1)
             {
@@ -73,7 +63,7 @@ module.exports =
     {
         var deferred = Q.defer();
 
-        usersCollection.insert(user, function(err, result)
+        this.usersCollection.insert(user, function(err, result)
         {
             if(err !== null)
                 deferred.reject(err);
@@ -83,5 +73,6 @@ module.exports =
 
         return deferred.promise;
     }
-}
+});
 
+module.exports = Users;
