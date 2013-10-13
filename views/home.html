@@ -29,8 +29,9 @@
             <ul>
                 <li>What?</li>
                 <li>About</li>
-                <li>Sign Up</li>
-                <li class="nav login">Log In</li>
+                <li>Welcome, <%=name%></li>
+                <li class="nav app">Go to App</li>
+                <li class="nav logout">Log Out</li>
             </ul>
         </div>        
 
@@ -44,20 +45,14 @@
         <script type="text/javascript">
             $(document).ready(function()
             {
-                $("ul > li.login").click(function()
+                $("ul > li.logout").click(function()
                 {
-                    var left = (window.innerWidth - 600) / 2;
-                    var top = (window.innerHeight - 600) / 2;
+                    location.href = "/auth/logout";
+                });
 
-                    var w = window.open("/auth/google", "Google_Auth", "menubar=no,location=no,resizable=no,scrollbar=no,status=no,left=" + left + "px,top=" + top + "px,width=600px,height=600px");
-                    var intervalID = setInterval(function()
-                    {
-                        if (w.closed)
-                        {
-                            clearInterval(intervalID);
-                            location.reload();
-                        }
-                    }, 100);
+                $("ul > li.app").click(function()
+                {
+                    location.href = "/app";
                 });
             });
         </script>

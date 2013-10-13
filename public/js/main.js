@@ -5,6 +5,8 @@ requirejs.config(
     {
         "text": "vendor/text",
 
+        "views": "views",
+        "models": "models",
         "templates": "../templates"
     },
 

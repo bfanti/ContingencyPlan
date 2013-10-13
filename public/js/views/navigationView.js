@@ -17,8 +17,6 @@ function(navigationViewTemplate)
 
         onRender: function()
         {
-            if(theApp.authenticated)
-                this.$("li[data-target='dashboard']").removeClass("disabled");
         },
 
         onNavigationClicked: function(e)
@@ -28,10 +26,8 @@ function(navigationViewTemplate)
 
             switch(target)
             {
-                case "home": this.navigateTo("home"); return;
-                case "login": this.navigateTo("login"); return;
                 case "dashboard": this.navigateTo("dashboard"); return;
-                case "about": this.navigateTo("about"); return;
+                case "logout": this.navigateTo("/auth/logout"); return;
                 default: return;
             }
         },

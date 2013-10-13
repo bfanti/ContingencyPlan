@@ -28,7 +28,8 @@
     "q": "~0.9.6",
     "passport-google-oauth": "~0.1.5",
     "underscore": "~1.5.1",
-    "ejs": "~0.8.4"
+    "ejs": "~0.8.4",
+    "node-schedule": "~0.1.11"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

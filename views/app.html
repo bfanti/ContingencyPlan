@@ -23,16 +23,12 @@
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
-
-        <div class="content">
-            <h1>Contingency Plan</h1>
-            <ul>
-                <li>What?</li>
-                <li>About</li>
-                <li>Sign Up</li>
-                <li class="nav login">Log In</li>
-            </ul>
-        </div>        
+        
+        <div id="application" class="container">
+            <div id="navigation"></div>
+            <div id="main"></div>
+            <div id="info"></div>
+        </div>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
@@ -40,27 +36,9 @@
         <script src="js/vendor/bootstrap.js"></script>
         <script src="js/vendor/underscore.js"></script>
         <script src="js/vendor/sha1.js"></script>
-
-        <script type="text/javascript">
-            $(document).ready(function()
-            {
-                $("ul > li.login").click(function()
-                {
-                    var left = (window.innerWidth - 600) / 2;
-                    var top = (window.innerHeight - 600) / 2;
-
-                    var w = window.open("/auth/google", "Google_Auth", "menubar=no,location=no,resizable=no,scrollbar=no,status=no,left=" + left + "px,top=" + top + "px,width=600px,height=600px");
-                    var intervalID = setInterval(function()
-                    {
-                        if (w.closed)
-                        {
-                            clearInterval(intervalID);
-                            location.reload();
-                        }
-                    }, 100);
-                });
-            });
-        </script>
+        <script src="js/vendor/backbone.js"></script>
+        <script src="js/vendor/backbone.marionette.js"></script>
+        <script data-main="js/main" src="js/vendor/require.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>

@@ -24,7 +24,7 @@ function(NavigationView, Router)
 
     app.addInitializer(function()
     {
-        this.router = new Router({ app: this });
+        this.router = new Router();
         Backbone.history.start({ pushState: false, root: "127.0.0.1:5000" });
     });
 
@@ -34,10 +34,6 @@ function(NavigationView, Router)
         app.views.navigationView = new NavigationView();
         app.navigationRegion.show(app.views.navigationView);
     })
-
-    app.load = function()
-    {
-    };
 
     window.theApp = app;
 

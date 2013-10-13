@@ -1,26 +1,31 @@
 define(
 [
+    "views/newContingencyPlanView",
+    "views/myContingencyPlansView",
+    "models/plans/contingencyPlansCollection",
     "text!templates/views/dashboardView.template.html"
 ],
-function(dashboardViewTemplate)
+function(NewContingencyPlanView, MyContingencyPlansView, ContingencyPlansCollection, dashboardViewTemplate)
 {
-   return Backbone.Marionette.ItemView.extend(
+   return Backbone.Marionette.Layout.extend(
    {
         template: _.template(dashboardViewTemplate),
 
+        regions:
+        {
+            newPlan: "div.createNewPlanContainer",
+            existingPlans: "div.existingPlansContainer"
+        },
+
         initialize: function()
         {
-            this.model = new (Backbone.Model.extend(
-            {
-                url: "http://127.0.0.1:5000/api/plans"
-            }));
-
-            this.model.fetch();
+            this.contingencyPlans = new ContingencyPlansCollection();
         },
 
         onRender: function()
         {
-
+            this.newPlan.show(new NewContingencyPlanView({ collection: this.contingencyPlans }));
+            this.existingPlans.show(new MyContingencyPlansView({ collection: this.contingencyPlans }));
         }
    });
 });

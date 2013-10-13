@@ -11,6 +11,11 @@ function ensureAuthenticated(req, res, next)
     res.end();
 }
 
+function authSuccessRedirect(req, res)
+{
+    res.send('<html><head><script type="text/javascript">window.close();</script></head></html>');
+}
+
 module.exports =
 {
 	load: function(app)
@@ -19,16 +24,22 @@ module.exports =
         app.get("/", function(req, res)
         {
             if(req.isAuthenticated())
-                res.render("index", { authenticated: true });
+                res.render("home", { name: "Bernardo" });
             else
-                res.render("index", { authenticated: false });
+                res.render("index");
         });
 
-        app.get("/account", ensureAuthenticated, function(req, res) { res.write("Logged in as: " + req.user.displayName); res.end(); });
+        app.get("/app", function(req, res)
+        {
+            if(req.isAuthenticated())
+                res.render("app", { user: req.user });
+            else
+                res.redirect("/");
+        });
 
         // Google Auth endpoints
 		app.get("/auth/google", passport.authenticate("google", { scope: [ "https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email" ] }));
-		app.get("/auth/google/return", passport.authenticate("google", { successRedirect: "/account", failureRedirect: "/login" }));
+		app.get("/auth/google/return", passport.authenticate("google", { failureRedirect: "/login" }), authSuccessRedirect);
         app.get("/auth/logout", function(req, res) { req.logout(); res.redirect("/"); });
 
         // REST API
