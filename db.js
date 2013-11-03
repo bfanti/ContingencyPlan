@@ -32,5 +32,3 @@ module.exports =
 
     db: _db
 }
-
-

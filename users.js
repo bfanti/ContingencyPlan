@@ -3,7 +3,6 @@ var _ = require("underscore");
 
 var Users = function(db)
 {
-    this.usersCollection = null;
     this.initialize(db);
 };
 
@@ -11,7 +10,7 @@ _.extend(Users.prototype,
 {
     initialize: function(db)    
     {
-        this.usersCollection = db.collection("usersCollection");
+        this.usersCollection = db.collection("users");
     },
 
     findOne: function(id)

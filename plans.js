@@ -13,7 +13,7 @@ _.extend(Plans.prototype,
     initialize: function(db)
     {
         this.scheduler = new Scheduler(db);
-        this.plansCollection = db.collection("plansCollection");
+        this.plansCollection = db.collection("contingencyPlans");
     },
 
     findAll: function(id)

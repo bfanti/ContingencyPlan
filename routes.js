@@ -6,7 +6,9 @@ var initialized = false;
 var Routes = function(app)
 {
     if(initialized)
+    {
         throw "Cannot load more than 1 Routes moudule";
+    }
     
     initialized = true;
     this.initialize(app);
@@ -34,17 +36,25 @@ _.extend(Routes.prototype,
         app.get("/", function(req, res)
         {
             if(req.isAuthenticated())
+            {
                 res.render("home", { name: "Bernardo" });
+            }
             else
+            {
                 res.render("index");
+            }
         });
 
         app.get("/app", function(req, res)
         {
             if(req.isAuthenticated())
+            {
                 res.render("app", { user: req.user });
+            }
             else
+            {
                 res.redirect("/");
+            }
         });
 
         // Google Auth endpoints
@@ -71,7 +81,7 @@ _.extend(Routes.prototype,
 
         app.get("/api/users", this._ensureAuthenticated, function(req, res)
         {
-            app.controllres.users.findOne(req.params.userId).done(function(user)
+            app.controllers.users.findOne(req.params.userId).done(function(user)
             {
                 res.json(user);
             })

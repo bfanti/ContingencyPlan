@@ -45,7 +45,8 @@ function startServer(db)
         app.use(express.cookieParser());
         app.use(express.bodyParser());
         app.use(express.methodOverride());
-        app.use(express.session(
+        app.use(express.session({ secret: "keyboard cat" }));
+        /*app.use(express.session(
         {
             secret: "keyboard cat",
             cookie:
@@ -56,7 +57,7 @@ function startServer(db)
             {
                 url: "mongodb://dbuser:dbuser@ds039498-a0.mongolab.com:39498/heroku_app17368956"
             }),
-        }));
+        }));*/
         app.use(express.favicon());
         app.use(express.logger("dev"));
         app.use
@@ -64,7 +65,7 @@ function startServer(db)
         app.use(passport.initialize());
         app.use(passport.session());
 
-        new Routes(app) ;
+        new Routes(app);
 
         app.use(app.router);
 
