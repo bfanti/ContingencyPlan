@@ -20,12 +20,17 @@ function(NewContingencyPlanView, MyContingencyPlansView, ContingencyPlansCollect
         initialize: function()
         {
             this.contingencyPlans = new ContingencyPlansCollection();
+            this.deferred = this.contingencyPlans.fetch();
         },
 
         onRender: function()
         {
-            this.newPlan.show(new NewContingencyPlanView({ collection: this.contingencyPlans }));
-            this.existingPlans.show(new MyContingencyPlansView({ collection: this.contingencyPlans }));
+            var self = this;
+            this.deferred.done(function()
+            {
+                self.newPlan.show(new NewContingencyPlanView({ collection: self.contingencyPlans }));
+                self.existingPlans.show(new MyContingencyPlansView({ collection: self.contingencyPlans }));
+            });
         }
    });
 });

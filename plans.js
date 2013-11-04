@@ -54,6 +54,21 @@ _.extend(Plans.prototype,
         }
 
         return deferred.promise;
+    },
+
+    deleteOne: function(planId)
+    {
+        var deferred = Q.defer();
+
+        this.plansCollection.delete({ id: planId }, function(err, result)
+        {
+            if(err)
+                deferred.reject(err);
+            else
+                deferred.resolve();
+        });
+
+        return deferred.promise;
     }
 });
 

@@ -3,6 +3,7 @@ var express = require("express");
 var MongoStore = require('connect-mongo')(express);
 var passport = require("passport");
 var GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
+var Q = require("q");
 
 var DB = require("./db.js");
 var Routes = require("./routes.js");
@@ -45,8 +46,8 @@ function startServer(db)
         app.use(express.cookieParser());
         app.use(express.bodyParser());
         app.use(express.methodOverride());
-        app.use(express.session({ secret: "keyboard cat" }));
-        /*app.use(express.session(
+        //app.use(express.session({ secret: "keyboard cat" }));
+        app.use(express.session(
         {
             secret: "keyboard cat",
             cookie:
@@ -55,9 +56,10 @@ function startServer(db)
             },
             store: new MongoStore(
             {
-                url: "mongodb://dbuser:dbuser@ds039498-a0.mongolab.com:39498/heroku_app17368956"
+                //url: "mongodb://dbuser:dbuser@ds039498-a0.mongolab.com:39498/heroku_app17368956"
+                db: db
             }),
-        }));*/
+        }));
         app.use(express.favicon());
         app.use(express.logger("dev"));
         app.use
@@ -109,6 +111,5 @@ function startServer(db)
     }));
 
     app.listen(config.server.port);
-
     console.log("App successfully initialized and started...");
 };

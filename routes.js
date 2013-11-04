@@ -65,10 +65,26 @@ _.extend(Routes.prototype,
         // REST API
         app.get("/api/plans", this._ensureAuthenticated, function(req, res)
         {
-            app.controllres.plans.findAll(req.user.id).done(function(plans)
+            app.controllers.plans.findAll(req.user.id).done(function(plans)
             {
                 res.json(plans);
-            })
+            });
+        });
+
+        app.get("/api/plans/:planId", this._ensureAuthenticated, function(req, res)
+        {
+            app.controllers.plans.findOne(req.params.planId).done(function(plan)
+            {
+                res.json(plan);
+            });
+        });
+
+        app.delete("/api/plans/:planId", this._ensureAuthenticated, function(req, res)
+        {
+            app.controllers.plans.deleteOne(req.params.planId).done(function(data)
+            {
+                res.json({});
+            });
         });
 
         app.post("/api/plans", this._ensureAuthenticated, function(req, res)
