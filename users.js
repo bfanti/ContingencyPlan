@@ -1,5 +1,7 @@
 var Q = require("q");
 var _ = require("underscore");
+var mongo = require("mongodb");
+var BSON = mongo.BSONPure;
 
 var Users = function(db)
 {
@@ -13,22 +15,22 @@ _.extend(Users.prototype,
         this.usersCollection = db.collection("users");
     },
 
-    findOne: function(id)
+    findOne: function(userId)
     {
         var deferred = Q.defer();
 
-        this.usersCollection.find({ googleId: id }).toArray(function(err, docs)
+        this.usersCollection.findOne({ _id: new BSON.ObjectID(userId) }, function(err, user)
         {
-            if(err !== null || docs.length !== 1)
+            if(err !== null || !user)
                 deferred.reject(err);
             else
-                deferred.resolve(docs[0]);
+                deferred.resolve(user);
         });
 
         return deferred.promise;
     },
 
-    findOrCreate: function(profile)
+    findByGoogleProfileOrCreate: function(profile)
     {
         var self = this;
         var deferred = Q.defer();
@@ -46,19 +48,25 @@ _.extend(Users.prototype,
                     emails: profile.emails
                 };
 
-                self.create(newUser).done(function(result)
+                self._create(newUser).done(function(result)
                 {
                     deferred.resolve(result);
                 })
             }
+            else if(docs.length > 1)
+            {
+                deferred.reject();
+            }
             else
+            {
                 deferred.resolve(docs[0]);
+            }
         });
 
         return deferred.promise;
     },
 
-    create: function(user)
+    _create: function(user)
     {
         var deferred = Q.defer();
 

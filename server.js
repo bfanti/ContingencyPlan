@@ -3,7 +3,6 @@ var express = require("express");
 var MongoStore = require('connect-mongo')(express);
 var passport = require("passport");
 var GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
-var Q = require("q");
 
 var DB = require("./db.js");
 var Routes = require("./routes.js");
@@ -46,19 +45,14 @@ function startServer(db)
         app.use(express.cookieParser());
         app.use(express.bodyParser());
         app.use(express.methodOverride());
-        //app.use(express.session({ secret: "keyboard cat" }));
         app.use(express.session(
         {
-            secret: "keyboard cat",
+            secret: "crazy secret passphrase to make my cookie secure",
             cookie:
             {
                 maxAge: 2629740000
             },
-            store: new MongoStore(
-            {
-                //url: "mongodb://dbuser:dbuser@ds039498-a0.mongolab.com:39498/heroku_app17368956"
-                db: db
-            }),
+            store: new MongoStore({ db: db })
         }));
         app.use(express.favicon());
         app.use(express.logger("dev"));
@@ -85,17 +79,20 @@ function startServer(db)
 
     passport.serializeUser(function(user, done)
     {
-        done(null, user.googleId);
+        done(null, user._id);
     });
 
     passport.deserializeUser(function(id, done)
     {
-        app.controllers.users.findOne(id).done(function (user) 
+        app.controllers.users.findOne(id).then(function (user) 
         {
             done(null, user);
+        }, function(err)
+        {
+            done(err, null);
         });
-    })
-    ;
+    });
+    
     passport.use(new GoogleStrategy(
     {
         clientID: "856641313075.apps.googleusercontent.com",
@@ -104,7 +101,7 @@ function startServer(db)
     },
     function(accessToken, refreshToken, profile, done)
     {
-        app.controllers.users.findOrCreate(profile).done(function(user)
+        app.controllers.users.findByGoogleProfileOrCreate(profile).done(function(user)
         {
             done(null, user);
         });

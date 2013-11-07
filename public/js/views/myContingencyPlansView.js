@@ -23,8 +23,6 @@ function(ContingencyPlanView, myContingencyPlansTemplate)
 
         onRender: function()
         {
-            console.log("render compositeview");
-            console.log(this.collection);
         }
     }); 
 });

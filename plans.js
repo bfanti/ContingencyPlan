@@ -2,6 +2,8 @@
 var Q = require("q");
 var _ = require("underscore");
 var Scheduler = require("./scheduler.js");
+var mongo = require("mongodb");
+var BSON = mongo.BSONPure;
 
 var Plans = function(db)
 {
@@ -16,16 +18,31 @@ _.extend(Plans.prototype,
         this.plansCollection = db.collection("contingencyPlans");
     },
 
-    findAll: function(id)
+    findAll: function(userId)
     {
         var deferred = Q.defer();
 
-        this.plansCollection.find({ userId: id }).toArray(function(err, docs)
+        this.plansCollection.find({ userId: userId }).toArray(function(err, docs)
         {   
             if(err !== null || docs === null)
                 deferred.reject(err);
             else
                 deferred.resolve(docs);
+        });
+
+        return deferred.promise;
+    },
+
+    findOne: function(userId, planId)
+    {
+        var deferred = Q.defer();
+
+        this.plansCollection.findOne({ userId: userId, _id: planId }, function(err, doc)
+        {   
+            if(err !== null || !doc)
+                deferred.reject(err);
+            else
+                deferred.resolve(doc);
         });
 
         return deferred.promise;
@@ -60,10 +77,10 @@ _.extend(Plans.prototype,
     {
         var deferred = Q.defer();
 
-        this.plansCollection.delete({ id: planId }, function(err, result)
+        this.plansCollection.remove({ _id: new BSON.ObjectID(planId) }, function(err, numberOfRemovedDocs)
         {
-            if(err)
-                deferred.reject(err);
+            if(numberOfRemovedDocs < 1)
+                deferred.reject();
             else
                 deferred.resolve();
         });

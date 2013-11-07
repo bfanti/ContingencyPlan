@@ -48,7 +48,6 @@ function(ContingencyPlanModel, newContingencyPlanTemplate)
 
         onNewPlanCreated: function()
         {
-            alert("plan successfully created!");
         }
     }); 
 });
