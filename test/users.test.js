@@ -10,7 +10,7 @@ var Users = require("../users");
 var mongo = require("mongodb");
 var BSON = mongo.BSONPure;
 
-describe("testSuite", function()
+describe("Users", function()
 {
     var userCollection =
     {
