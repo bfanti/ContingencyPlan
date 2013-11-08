@@ -7,7 +7,7 @@ var Routes = function(app)
 {
     if(initialized)
     {
-        throw "Cannot load more than 1 Routes moudule";
+        throw "Cannot instantiate more than one Routes moudule";
     }
     
     initialized = true;
@@ -24,7 +24,9 @@ _.extend(Routes.prototype,
     _ensureAuthenticated: function(req, res, next)
     {
         if (req.isAuthenticated())
+        {
             return next();
+        }
 
         res.statusCode = 401;
         res.end();
@@ -86,7 +88,7 @@ _.extend(Routes.prototype,
             });
         });
 
-        app.delete("/api/plans/:planId", this._ensureAuthenticated, function(req, res)
+        app.del("/api/plans/:planId", this._ensureAuthenticated, function(req, res)
         {
             app.controllers.plans.deleteOne(req.params.planId).then(function(data)
             {
@@ -116,7 +118,7 @@ _.extend(Routes.prototype,
             {
                 res.json(user);
             });
-        }, function()
+        }, function(req, res)
         {
             res.send(400, "Bad Request");
         });

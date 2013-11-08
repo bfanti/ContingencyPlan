@@ -23,8 +23,6 @@ config.server.env = process.env.ENV || "LOCAL";
 config.server.port = process.env.PORT || config.server.port;
 config.server.public_dir = process.env.PUBLIC_DIR || config.server.public_dir;
 
-DB.initialize().done(startServer);
-
 function startServer(db)
 {
     app.controllers =
@@ -56,7 +54,6 @@ function startServer(db)
         }));
         app.use(express.favicon());
         app.use(express.logger("dev"));
-        app.use
 
         app.use(passport.initialize());
         app.use(passport.session());
@@ -109,4 +106,6 @@ function startServer(db)
 
     app.listen(config.server.port);
     console.log("App successfully initialized and started...");
-};
+}
+
+DB.initialize().done(startServer);

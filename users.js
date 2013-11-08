@@ -5,12 +5,12 @@ var BSON = mongo.BSONPure;
 
 var Users = function(db)
 {
-    this.initialize(db);
+    this._initialize(db);
 };
 
 _.extend(Users.prototype,
 {
-    initialize: function(db)    
+    _initialize: function(db)    
     {
         this.usersCollection = db.collection("users");
     },
