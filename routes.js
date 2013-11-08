@@ -37,7 +37,7 @@ _.extend(Routes.prototype,
         {
             if(req.isAuthenticated())
             {
-                res.render("home", { name: "Bernardo" });
+                res.render("home", { name: req.user.firstName });
             }
             else
             {
