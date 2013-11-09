@@ -7,65 +7,253 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
+        <title>Contingency Plans</title>
+        <meta name="description" content="Contingency Plans is an app that helps you keep your friends and loved ones informed about your adventures and helps them find you if you get lost or hurt">
+        <meta name="keywords" content="mountain, adventure, emergency, search, rescue, injury, ski, mountaineer, touring, alpine, contingency, plan">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/vendor/bootstrap.css">
-        <link rel="stylesheet" href="css/vendor/bootstrap-responsive.css">
+        
+        <link rel="stylesheet" href="lib/css/bootstrap.css">
+        <link rel="stylesheet" href="lib/css/bootstrap-glyphicons.css">
+        <link rel="stylesheet" href="lib/css/font-awesome.css">
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,700">
+        <link rel="stylesheet" href="lib/js/prettyphoto/css/prettyPhoto.css">
+        <link rel="stylesheet" href="lib/css/animate.css" />
+        <link rel="stylesheet" id="prod-css" href="lib/css/style-orange.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" hrew="css/app.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
+    <body data-spy="scroll" data-target="#navbar-spy" data-offset="160">
+    <!--[if lt IE 7]>
+      <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+    <div id="wrapper">
 
-        <div class="content">
-            <h1>Contingency Plan</h1>
-            <ul>
-                <li>What?</li>
-                <li>About</li>
-                <li>Welcome, <%=name%></li>
-                <li class="nav app">Go to App</li>
-                <li class="nav logout">Log Out</li>
-            </ul>
-        </div>        
+      <!-- Begin #header-section -->
+      <div id="home" class="container-section">
+        <div id="navbar-section" class="navbar navbar-static-top">
+          <div class="container">
+            
+             <!-- .navbar-toggle is used as the toggle for collapsed navbar content -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            
+            <!-- Be sure to leave the brand out there if you want it shown -->
+            <a class="navbar-brand" href="/">CONTINGENCY</a>
+            
+            <div id="navbar-spy" class="nav-collapse collapse navbar-responsive-collapse">
+              <ul class="nav navbar-nav pull-right">
+                <li class="active"><a href="#home">HOME</a></li>
+                <li><a href="#why">WHY?</a></li>
+                <li><a href="#what">WHAT?</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+                <li><a href=""><%=name.toUpperCase()%></a></li>
+                <li><a href="/app">GO TO APP</a></li>
+                <li><a href="/logout">LOGOUT</a></li>
+              </ul>         
+            </div>
+          
+          </div>
+        </div>
+      </div>
+      <!-- End #header-section -->
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-        <script src="js/plugins.js"></script>
-        <script src="js/vendor/bootstrap.js"></script>
-        <script src="js/vendor/underscore.js"></script>
-        <script src="js/vendor/sha1.js"></script>
+      <!-- Begin .about-section -->
+      <div id="why" class="about-section global-section container-section">
+        <div class="container">
+          <div class="row">
+            <div class="section-header-text">
+              <h3 class="section-header-title">WHY?</h3>
+              <p class="section-header-body-lead">Are you an avid adventurer? Do you create your own foot steps instead of following others? <br/> Ski mountaineering, hiking, or trail running off the beaten path?<br/>All those activities are high risk, high reward activities, and let's be honest, shit happens.<br/>Have you ever left your loved ones at home with only approximate details about your adventure, and wondered "What if I get hurt? Will SAR know where to look for me?"</p>
+            </div>
+          </div>
+        </div>
+      
+      </div>
+      <!-- End .about-section -->
 
-        <script type="text/javascript">
-            $(document).ready(function()
-            {
-                $("ul > li.logout").click(function()
-                {
-                    location.href = "/auth/logout";
-                });
+      <!-- Begin #services-section -->
+      <div id="what" class="services-section global-section container-section">    
+        <div class="container">
+          
+          <div class="row">
+            <div class="section-header">
+              <h3 class="section-header-title">WHAT?</h3>
+              <p class="section-header-body">How Contingency Plans helps you...</p>
+            </div>
+          </div>
+          
+          <!-- Begin Services Row 1 -->
+          <div class="row services-row services-row-head services-row-1">
+            <div class="col-12 col-sm-4 col-lg-4">
+              <div class="services-group">
+                <p class="services-icon"><span class="icon-beaker icon-5x"></span></p>
+                <h4 class="services-title">ADVENTURE</h4>
+                <p class="services-body">Create an Adventure plan with as much detail as you want: start date and time, start coordinates, waypoint coordinates or full GPS route, description, and estimated time of return.</p>
+              </div>
+            </div>
+            <div class="col-12 col-sm-4 col-lg-4">
+              <div class="services-group">
+                <p class="services-icon"><i class="icon-desktop icon-5x"></i></p>
+                <h4 class="services-title">CONTINGENCY</h4>
+                <p class="services-body">Think something might go wrong? Attach a Contingency Plan to your Adventure! Define expected stages of contingency and desired escalation, then connect with your closests friends and loved ones by e-mail, SMS, or phone.</p>
+              </div>
+            </div>
+            <div class="col-12 col-sm-4 col-lg-4">
+              <div class="services-group">
+                <p class="services-icon"><i class="icon-thumbs-up-alt icon-5x"></i></p>
+                <h4 class="services-title">GO!</h4>
+                <p class="services-body">Set off on your adventure with one less worry: emails or SMS will go out to all your configured contacts notifying them of your plans. If something happens, your escalation plan will go into effect and </p>
+              </div>
+            </div>
+          </div>
+          <!-- End Serivces Row 1 -->
+           <!-- Begin Services Row 2 -->
+          <div class="row services-row services-row-tail services-row-2">
+            <div class="col-12 col-sm-4 col-lg-4 col-offset-2">
+              <div class="services-group">
+                <p class="services-icon"><span class="icon-shield icon-5x"></span></p>
+                <h4 class="services-title">WEB AND MOBILE</h4>
+                <p class="services-body">Cras interdum placerat libero vel tempor. Curabitur gravida iaculis erat quis dignissim.</p>
+              </div>
+            </div>
+            <div class="col-12 col-sm-4 col-lg-4">
+              <div class="services-group">
+                <p class="services-icon"><i class="icon-eye-open icon-5x"></i></p>
+                <h4 class="services-title">FAILSAFE</h4>
+                <p class="services-body">Cras interdum placerat libero vel tempor. Curabitur gravida iaculis erat quis dignissim.</p>
+              </div>
+            </div>
+          </div>
+          <!-- End Serivces Row 2 -->
+        
+        </div>      
+      </div>
+      <!-- End #services-section -->
 
-                $("ul > li.app").click(function()
-                {
-                    location.href = "/app";
-                });
-            });
-        </script>
+      <!-- Begin .about-section -->
+      <div id="about" class="about-section global-section container-section">
+        
+        <div class="container">
+          <div class="row">
+            <div class="section-header-text">
+              <h3 class="section-header-title">ABOUT US</h3>
+              <p class="section-header-body-lead">We are a group of adventurers and engineers with a varied and international background who now live and work in gorgeous Boulder, CO. We spend our week days building cool shit, whether with C++, JavaScript, or a plasma cutter and a MIG welder. Afternoons are spent on the many trails Boulder has to offer, and weekends take us out on extreme adventures in the many alpine regions in Colorado.</p>
+            </div>
+          </div>
+        </div>
+      
+      </div>
+      <!-- End .about-section -->
 
-        <script>
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      <!-- Begin .contact-section -->
+      <div id="contact" class="contact-section global-section container-section">
+        <div class="container">
+          <div class="row">
+            <div class="section-header-text">
+              <h3 class="section-header-title">CONTACT US</h3>
+              <p class="section-header-body">Got input? Send it our way! We'll make sure to review all feedback we receive and prioritize feature requests accordingly.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End .contact-section -->
 
-          ga('create', 'UA-31369136-2', 'mycontingencyplans.com');
-          ga('send', 'pageview');
+      <!-- Begin .feedback-section -->
+      <div id="feedback" class="feedback-section container-section">
+        
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-lg-8">
+              
+              <div class="feedback-form">
+              
+                <div id="contact-response"></div>
+                
+                <form action="contact.php" method="post" id="contact-form">
+                  <fieldset>
+                    <div class="form-group form-group-fullname">
+                      <label class="control-label" for="fullname">NAME *</label>
+                      <input type="text" class="form-control" name="fullname" id="fullname" placeholder="Enter Your Name">
+                    </div>
+                    <div class="form-group form-group-email">
+                      <label class="control-label" for="email">E-MAIL *</label>
+                      <input type="text" class="form-control" name="email" id="email" placeholder="Enter Your E-Mail">
+                    </div>
+                    <div class="form-group form-group-message">
+                      <label class="control-label" for="message">MESSAGE *</label>
+                      <textarea class="form-control" name="message" id="message" rows="3"></textarea>
+                    </div>                
+                    <button type="submit" class="btn btn-brand">Submit</button>
+                  </fieldset>
+                </form>
+              
+              </div>
+              
+            </div>
+            <div class="col-12 col-sm-12 col-lg-3 col-offset-1">       
+              
+              <div class="row">
+                <div class="address-subsection">
+                  <div class="address-icon"><i class="icon-map-marker"></i></div>
+                  <h4 class="address-title">LOCATE US</h4>
+                  <address>
+                    Boulder, CO<br>
+                    <abbr title="Phone">P:</abbr> xxx-xxx-xxxx
+                  </address>
+                </div>
+              </div>                    
+            
+            </div>
+          </div>
+        </div>
+      
+      </div>
+      <!-- End .feedback-section -->
 
-        </script>
+      <!-- Begin .location-section -->
+      <div id="location-gmap" class="location-section"></div>
+      <!-- End .location-section -->
+
+      <!-- Begin .footer-section -->
+      <div id="footer" class="footer-section">
+        <div class="footer-copyright">&copy; COPYRIGHT 2013 - BERNARDO FANTI, LLC</div>
+        <ul class="widget_social-list-wrapper widget_social-two list-inline clearfix">
+          <li class="facebook"><a href="javascript:;" target="_blank" title="Facebook" data-toggle="tooltip">Facebook</a></li>
+          <li class="twitter"><a href="javascript:;" target="_blank" title="Twitter" data-toggle="tooltip">Twitter</a></li>
+          <li class="gplus"><a href="javascript:;" target="_blank" title="Google Plus" data-toggle="tooltip">Google Plus</a></li>
+        </ul>
+      </div>
+      <!-- End .footer-section -->
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+    
+    <script src="lib/js/bootstrap.js"></script>
+    <script src="lib/js/prettyphoto/js/jquery.prettyPhoto.js"></script>
+    <script src="http://maps.google.com/maps/api/js?sensor=false&amp;language=en"></script>
+    <script src="lib/js/plugins.js"></script>
+    <script src="lib/js/custom.js"></script>
+
+    <script src="js/vendor/underscore.js"></script>
+    <script src="js/vendor/sha1.js"></script>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-31369136-2', 'mycontingencyplans.com');
+      ga('send', 'pageview');
+
+    </script>
+
     </body>
 </html>

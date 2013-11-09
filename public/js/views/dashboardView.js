@@ -26,9 +26,9 @@ function(NewContingencyPlanView, MyContingencyPlansView, ContingencyPlansCollect
         onRender: function()
         {
             var self = this;
+            this.newPlan.show(new NewContingencyPlanView({ collection: this.contingencyPlans }));
             this.deferred.done(function()
             {
-                self.newPlan.show(new NewContingencyPlanView({ collection: self.contingencyPlans }));
                 self.existingPlans.show(new MyContingencyPlansView({ collection: self.contingencyPlans }));
             });
         }

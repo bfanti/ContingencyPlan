@@ -51,7 +51,7 @@ _.extend(Routes.prototype,
         {
             if(req.isAuthenticated())
             {
-                res.render("app", { user: req.user });
+                res.render("app", { name: req.user.firstName, user: req.user });
             }
             else
             {
