@@ -1,10 +1,10 @@
 requirejs.config(
 {
-    deps: ["js/app.js"],
+    baseUrl: "js",
+
     paths:
     {
         "text": "vendor/text",
-
         "views": "views",
         "models": "models",
         "templates": "../templates"
@@ -14,3 +14,5 @@ requirejs.config(
     {
     }
 });
+
+require([ "app" ], function(app) {});

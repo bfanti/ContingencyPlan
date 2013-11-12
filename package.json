@@ -46,7 +46,9 @@
     "grunt-contrib-clean": "~0.4.1",
     "node-inspector": "~0.3.2",
     "sinon": "~1.7.3",
-    "chai-as-promised": "~4.1.0"
+    "chai-as-promised": "~4.1.0",
+    "grunt-mocha": "~0.4.1",
+    "grunt-contrib-requirejs": "~0.4.1"
   },
   "license": "MIT",
   "engines": {

@@ -33,7 +33,7 @@ function(NavigationView, Router)
         // Initialize and show the NavigationView immediately
         app.views.navigationView = new NavigationView();
         app.navigationRegion.show(app.views.navigationView);
-    })
+    });
 
     window.theApp = app;
 
