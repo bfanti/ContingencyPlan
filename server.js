@@ -1,3 +1,5 @@
+require("newrelic");
+
 var config = require("./config.json");
 var express = require("express");
 var MongoStore = require('connect-mongo')(express);
